@@ -3,8 +3,8 @@ package repl
 import "bufio"
 import "fmt"
 import "io"
-import "example/golang/lexer"
-import "example/golang/token"
+import "mongkee/lexer"
+import "mongkee/token"
 
 const PROMPT = ">> "
 

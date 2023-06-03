@@ -3,7 +3,7 @@ package main
 import "fmt"
 import "os"
 import "os/user"
-import "example/golang/repl"
+import "mongkee/repl"
 
 func main() {
 	user, err := user.Current()
@@ -11,7 +11,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("Hello %s! This is the Monkey programming language!\n", user.Username)
+	fmt.Printf("Hello %s! This is the Mongkee programming language!\n", user.Username)
 	fmt.Printf("Feel free to type in commands\n")
 	repl.Start(os.Stdin, os.Stdout)
 }

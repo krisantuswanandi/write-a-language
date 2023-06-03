@@ -1,3 +1,3 @@
-module example/golang
+module mongkee
 
 go 1.20

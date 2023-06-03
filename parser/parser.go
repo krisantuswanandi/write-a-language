@@ -2,9 +2,9 @@ package parser
 
 import "fmt"
 import "strconv"
-import "example/golang/ast"
-import "example/golang/lexer"
-import "example/golang/token"
+import "mongkee/ast"
+import "mongkee/lexer"
+import "mongkee/token"
 
 const (
 	_ int = iota

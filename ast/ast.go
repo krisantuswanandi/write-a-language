@@ -1,7 +1,7 @@
 package ast
 
 import "bytes"
-import "example/golang/token"
+import "mongkee/token"
 
 type Node interface {
 	TokenLiteral() string

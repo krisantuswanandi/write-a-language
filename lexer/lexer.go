@@ -1,6 +1,6 @@
 package lexer
 
-import "example/golang/token"
+import "mongkee/token"
 
 type Lexer struct {
 	input string

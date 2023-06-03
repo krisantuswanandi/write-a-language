@@ -1,7 +1,7 @@
 package ast
 
 import "testing"
-import "example/golang/token"
+import "mongkee/token"
 
 func TestString(t *testing.T) {
 	input := "let myVar = anotherVar;"

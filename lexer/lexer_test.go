@@ -1,7 +1,7 @@
 package lexer
 
 import "testing"
-import "example/golang/token"
+import "mongkee/token"
 
 func TestNextToken(t *testing.T) {
 	input := `let five = 5;

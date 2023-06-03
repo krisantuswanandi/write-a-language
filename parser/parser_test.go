@@ -2,8 +2,8 @@ package parser
 
 import "fmt"
 import "testing"
-import "example/golang/ast"
-import "example/golang/lexer"
+import "mongkee/ast"
+import "mongkee/lexer"
 
 func TestLetStatements(t *testing.T) {
 	input := `
