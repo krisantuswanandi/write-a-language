@@ -3,6 +3,7 @@ package evaluator
 import "mongkee/ast"
 import "mongkee/object"
 
+var NULL = &object.Null{}
 var TRUE = &object.Boolean{Value: true}
 var FALSE = &object.Boolean{Value: false}
 
