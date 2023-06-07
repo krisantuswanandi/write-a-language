@@ -6,6 +6,7 @@ const INTEGER_OBJ = "INTEGER"
 const BOOLEAN_OBJ = "BOOLEAN"
 const NULL_OBJ = "NULL"
 const RETURN_OBJ = "RETURN"
+const ERROR_OBJ = "ERROR"
 
 type ObjectType string
 
@@ -35,3 +36,9 @@ type Return struct {
 }
 func (r *Return) Type() ObjectType { return RETURN_OBJ }
 func (r *Return) Inspect() string { return r.Value.Inspect() }
+
+type Error struct {
+	Message string
+}
+func (e *Error) Type() ObjectType { return ERROR_OBJ }
+func (e *Error) Inspect() string { return "ERROR: " + e.Message }
