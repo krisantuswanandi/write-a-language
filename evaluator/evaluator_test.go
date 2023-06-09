@@ -77,9 +77,11 @@ func TestBangOperator(t *testing.T) {
 		{"!true", false},
 		{"!false", true},
 		{"!5", false},
+		{`!"foobar"`, false},
 		{"!!true", true},
 		{"!!false", false},
 		{"!!5", true},
+		{`!!"foobar"`, true},
 	}
 
 	for _, tt := range tests {
@@ -100,14 +102,19 @@ func TestIfElseExpression(t *testing.T) {
 		{"if (1 > 2) { 10 }", nil},
 		{"if (1 > 2) { 10 } else { 20 }", 20},
 		{"if (1 < 2) { 10 } else { 20 }", 10},
+		{`if (true) { "foobar" }`, "foobar"},
+		{`if ("foo") { "foobar" }`, "foobar"},
+		{`if ("foo" < "bar") { "foobar" }`, nil},
 	}
 
 	for _, tt := range tests {
 		evaluated := testEval(tt.input)
-		integer, ok := tt.expected.(int)
-		if ok {
-			testIntegerObject(t, evaluated, int64(integer))
-		} else {
+		switch v := tt.expected.(type) {
+		case int:
+			testIntegerObject(t, evaluated, int64(v))
+		case string:
+			testStringObject(t, evaluated, v)
+		default:
 			testNullObject(t, evaluated)
 		}
 	}
@@ -116,18 +123,28 @@ func TestIfElseExpression(t *testing.T) {
 func TestReturnStatement(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected int64
+		expected interface{}
 	}{
 		{"return 10;", 10},
 		{"return 10; 9;", 10},
 		{"return 2 * 5; 9;", 10},
 		{"9; return 2 * 5; 9;", 10},
 		{"if (1) { if (1) { return 10; } return 1; }", 10},
+		{`return "foobar";`, "foobar"},
+		{`return "foobar"; "foo";`, "foobar"},
+		{`return "foo" + "bar"; "foo";`, "foobar"},
 	}
 
 	for _, tt := range tests {
 		evaluated := testEval(tt.input)
-		testIntegerObject(t, evaluated, tt.expected)
+		switch v := tt.expected.(type) {
+		case int:
+			testIntegerObject(t, evaluated, int64(v))
+		case string:
+			testStringObject(t, evaluated, v)
+		default:
+			testNullObject(t, evaluated)
+		}
 	}
 }
 
@@ -260,15 +277,7 @@ func TestStringLiteral(t *testing.T) {
 	input := `"Hello World!";`
 
 	evaluated := testEval(input)
-	str, ok := evaluated.(*object.String)
-
-	if !ok {
-		t.Fatalf("object is not string. got=%T", evaluated)
-	}
-
-	if str.Value != "Hello World!" {
-		t.Fatalf("wrong string value. got=%q", str.Value)
-	}
+	testStringObject(t, evaluated, "Hello World!")
 }
 
 func TestStringConcatenation(t *testing.T) {
@@ -330,5 +339,20 @@ func testNullObject(t *testing.T, obj object.Object) bool {
 		t.Errorf("object is not NULL. got=%T", obj)
 		return false
 	}
+	return true
+}
+
+func testStringObject(t *testing.T, obj object.Object, expected string) bool {
+	result, ok := obj.(*object.String)
+	if !ok {
+		t.Errorf("object is not String. got=%T", obj)
+		return false
+	}
+
+	if result.Value != expected {
+		t.Errorf("wrong string value. got=%s", result.Value)
+		return false
+	}
+
 	return true
 }
