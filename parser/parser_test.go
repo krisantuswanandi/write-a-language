@@ -7,9 +7,9 @@ import "mongkee/lexer"
 
 func TestLetStatements(t *testing.T) {
 	tests := []struct {
-		input string
+		input              string
 		expectedIdentifier string
-		expectedValue interface{}
+		expectedValue      interface{}
 	}{
 		{"let x = 5;", "x", 5},
 		{"let y = true;", "y", true},
@@ -40,7 +40,7 @@ func TestLetStatements(t *testing.T) {
 
 func TestReturnStatements(t *testing.T) {
 	tests := []struct {
-		input string
+		input         string
 		expectedValue interface{}
 	}{
 		{"return 5;", 5},
@@ -137,9 +137,9 @@ func TestIntegerLiteralExpression(t *testing.T) {
 
 func TestParsingPrefixExpressions(t *testing.T) {
 	prefixTests := []struct {
-		input string
+		input    string
 		operator string
-		value interface{}
+		value    interface{}
 	}{
 		{"!5;", "!", 5},
 		{"-15;", "-", 15},
@@ -179,9 +179,9 @@ func TestParsingPrefixExpressions(t *testing.T) {
 
 func TestParsingInfixExpressions(t *testing.T) {
 	infixTests := []struct {
-		input string
-		leftValue interface{}
-		operator string
+		input      string
+		leftValue  interface{}
+		operator   string
 		rightValue interface{}
 	}{
 		{"5 + 5;", 5, "+", 5},
@@ -228,7 +228,7 @@ func TestParsingInfixExpressions(t *testing.T) {
 
 func TestOperatorPrecedenceParsing(t *testing.T) {
 	tests := []struct {
-		input string
+		input    string
 		expected string
 	}{
 		{
@@ -344,7 +344,7 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 
 func TestBooleanExpression(t *testing.T) {
 	tests := []struct {
-		input string
+		input           string
 		expectedBoolean bool
 	}{
 		{"true;", true},
@@ -356,7 +356,7 @@ func TestBooleanExpression(t *testing.T) {
 		p := New(l)
 		program := p.ParseProgram()
 		checkParserErrors(t, p)
-		
+
 		if len(program.Statements) != 1 {
 			t.Fatalf("program contains more than 1 statement. got=%d", len(program.Statements))
 		}
@@ -374,7 +374,7 @@ func TestBooleanExpression(t *testing.T) {
 		if boolean.Value != tt.expectedBoolean {
 			t.Fatalf("boolean.Value not '%t'. got=%t", tt.expectedBoolean, boolean.Value)
 		}
-		
+
 	}
 }
 
@@ -518,7 +518,7 @@ func TestFunctionLiteralParsing(t *testing.T) {
 
 func TestFunctionParametersParsing(t *testing.T) {
 	tests := []struct {
-		input string
+		input          string
 		expectedParams []string
 	}{
 		{"fn() {};", []string{}},
@@ -562,7 +562,7 @@ func TestCallExpressionParsing(t *testing.T) {
 		t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T", program.Statements[0])
 	}
 
-	exp, ok :=  stmt.Expression.(*ast.CallExpression)
+	exp, ok := stmt.Expression.(*ast.CallExpression)
 	if !ok {
 		t.Fatalf("exp is not ast.CallExpression. got=%T", stmt.Expression)
 	}
@@ -578,6 +578,26 @@ func TestCallExpressionParsing(t *testing.T) {
 	testLiteralExpression(t, exp.Arguments[0], 1)
 	testInfixExpression(t, exp.Arguments[1], 2, "*", 3)
 	testInfixExpression(t, exp.Arguments[2], 4, "+", 5)
+}
+
+func TestStringLiteralExpression(t *testing.T) {
+	input := `"hello world";`
+
+	l := lexer.New(input)
+	p := New(l)
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	stmt := program.Statements[0].(*ast.ExpressionStatement)
+	literal, ok := stmt.Expression.(*ast.StringLiteral)
+
+	if !ok {
+		t.Fatalf("exp not ast.StringLiteral. got=%T", stmt.Expression)
+	}
+
+	if literal.Value != "hello world" {
+		t.Errorf("value not 'hello world'. got=%q", literal.Value)
+	}
 }
 
 func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
@@ -695,7 +715,7 @@ func testBooleanLiteral(t *testing.T, exp ast.Expression, value bool) bool {
 		t.Errorf("bo.Value not %t. got=%t", value, bo.Value)
 		return false
 	}
-	
+
 	if bo.TokenLiteral() != fmt.Sprintf("%t", value) {
 		t.Errorf("bo.TokenLiteral not %t. got=%s", value, bo.TokenLiteral())
 		return false
