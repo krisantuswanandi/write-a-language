@@ -41,6 +41,7 @@ const FALSE = "FALSE"
 const IF = "IF"
 const ELSE = "ELSE"
 const RETURN = "RETURN"
+const STRING = "STRING"
 
 var keywords = map[string]TokenType {
 	"fn": FUNCTION,
