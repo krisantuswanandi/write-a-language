@@ -33,6 +33,8 @@ const LPAREN = "("
 const RPAREN = ")"
 const LBRACE = "{"
 const RBRACE = "}"
+const LBRACKET = "["
+const RBRACKET = "]"
 
 const FUNCTION = "FUNCTION"
 const LET = "LET"
