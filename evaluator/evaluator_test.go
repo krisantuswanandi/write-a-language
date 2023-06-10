@@ -308,7 +308,7 @@ func TestBuiltinFunctions(t *testing.T) {
 		{`rest([])`, nil},
 		{`push([], 1)`, []int{1}},
 		{`push(1, 1)`, "argument to `push` not supported. got=INTEGER"},
-		// {`puts("hello", "world!")`, nil},
+		{`puts("hello", "world!")`, nil},
 	}
 
 	for _, tt := range tests {
