@@ -296,6 +296,19 @@ func TestBuiltinFunctions(t *testing.T) {
 		{`len("hello world")`, 11},
 		{`len(1)`, "argument to `len` not supported. got=INTEGER"},
 		{`len("one", "two")`, "wrong number of arguments. got=2"},
+		{`len([1, 2, 3])`, 3},
+		{`len([])`, 0},
+		{`first([1, 2, 3])`, 1},
+		{`first([])`, nil},
+		{`first(1)`, "argument to `first` not supported. got=INTEGER"},
+		{`last([1, 2, 3])`, 3},
+		{`last([])`, nil},
+		{`last(1)`, "argument to `last` not supported. got=INTEGER"},
+		{`rest([1, 2, 3])`, []int{2, 3}},
+		{`rest([])`, nil},
+		{`push([], 1)`, []int{1}},
+		{`push(1, 1)`, "argument to `push` not supported. got=INTEGER"},
+		// {`puts("hello", "world!")`, nil},
 	}
 
 	for _, tt := range tests {
@@ -306,6 +319,23 @@ func TestBuiltinFunctions(t *testing.T) {
 			testIntegerObject(t, evaluated, int64(v))
 		case string:
 			testErrorObject(t, evaluated, v)
+		case []int:
+			array, ok := evaluated.(*object.Array)
+			if !ok {
+				t.Errorf("obj not Array. got=%T", evaluated)
+				continue
+			}
+
+			if len(array.Elements) != len(v) {
+				t.Errorf("wrong number of elements. got=%d", len(array.Elements))
+				continue
+			}
+
+			for i, expectedElem := range v {
+				testIntegerObject(t, array.Elements[i], int64(expectedElem))
+			}
+		case nil:
+			testNullObject(t, evaluated)
 		}
 	}
 }
