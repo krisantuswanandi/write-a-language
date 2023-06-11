@@ -28,6 +28,7 @@ const NOT_EQUAL = "!="
 
 const COMMA = ","
 const SEMICOLON = ";"
+const COLON = ":"
 
 const LPAREN = "("
 const RPAREN = ")"
