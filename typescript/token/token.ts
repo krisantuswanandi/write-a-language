@@ -32,7 +32,7 @@ export const TOKEN = {
   STRING: "STRING",
 } as const;
 
-type TokenType = typeof TOKEN[keyof typeof TOKEN];
+export type TokenType = typeof TOKEN[keyof typeof TOKEN];
 
 export type Token = {
   type: TokenType;
