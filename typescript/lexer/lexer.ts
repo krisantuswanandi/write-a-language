@@ -85,20 +85,14 @@ export class Lexer {
 				token = this.createToken(TOKEN.EOF)
 				break;
 			default:
-				let literal: string
-				let type: TokenType
-
 				if (this.isLetter(this.ch)) {
-					literal = this.readIdentifier()
-					type = lookupIdent(literal)
+					const ident = this.readIdentifier()
+					return this.createToken(lookupIdent(ident), ident)
 				} else if (this.isDigit(this.ch)){
-					literal = this.readNumber()
-					type = TOKEN.INT
+					return this.createToken(TOKEN.INT, this.readNumber())
 				} else {
-					literal = this.ch
-					type = TOKEN.ILLEGAL
+					token = this.createToken(TOKEN.ILLEGAL, this.ch)
 				}
-				token = this.createToken(type, literal)
 		}
 
 		this.readChar()

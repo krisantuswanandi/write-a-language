@@ -116,7 +116,7 @@ test("test next token", () => {
 		{ type: TOKEN.STRING, literal: "bar" },
 		{ type: TOKEN.RBRACE, literal: "}" },
 		{ type: TOKEN.SEMICOLON, literal: ";" },
-		{ type: TOKEN.EOF, literal: "" },
+		{ type: TOKEN.EOF, literal: "\0" },
 	];
 
 	const lexer = new Lexer(input);
