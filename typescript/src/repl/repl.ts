@@ -8,7 +8,7 @@ for await (const line of console) {
 	const lexer = new Lexer(line)
 	while (true) {
 		const token = lexer.nextToken()
-		console.log(`${token.type}("${token.literal}`)
+		console.log(`${token.type}: ${token.literal}`)
 
 		if (token.type === TOKEN.EOF) break
 	}
