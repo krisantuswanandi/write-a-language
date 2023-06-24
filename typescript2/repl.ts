@@ -1,13 +1,13 @@
-import { tokenize } from "./lexer"
+import { Parser } from "./parser"
+
+const parser = new Parser()
 
 console.write(">> ");
 for await (const line of console) {
 	if (line === "exit") break
 
-	const tokens = tokenize(line)
-	tokens.forEach((token) => {
-		console.log(`${token.type}: ${token.value}`)
-	})
+	const program = parser.produceAST(line)
+	console.log(program)
 
 	console.write(">> ");
 }
