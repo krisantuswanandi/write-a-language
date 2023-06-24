@@ -6,6 +6,7 @@ export enum TokenType {
 	CloseParen = "CloseParen",
 	BinaryOperator = "BinaryOperator",
 	Let = "Let",
+	EOF = "EOF",
 }
 
 const KEYWORDS: Record<string, TokenType> = {
@@ -82,9 +83,9 @@ export function tokenize(sourceCode: string): Token[] {
 				console.log("unrecognized character found in source: ", src[0])
 				process.exit(0)
 			}
-
 		}
 	}
 
+	tokens.push(createToken("", TokenType.EOF))
 	return tokens
 }
