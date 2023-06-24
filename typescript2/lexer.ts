@@ -80,8 +80,8 @@ export function tokenize(sourceCode: string): Token[] {
 			} else if (isWhitespace(src[0])) {
 				src.shift()
 			} else {
-				console.log("unrecognized character found in source: ", src[0])
-				process.exit(0)
+				console.error("unrecognized character found in source: ", src[0])
+				process.exit(1)
 			}
 		}
 	}
