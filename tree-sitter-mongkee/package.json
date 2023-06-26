@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts": "tree-sitter",
     "generate": "tree-sitter generate",
-    "parse": "tree-sitter parse"
+    "parse": "tree-sitter parse",
+    "highlight": "tree-sitter highlight"
   },
   "keywords": [],
   "author": "",
