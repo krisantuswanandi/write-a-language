@@ -1,5 +1,6 @@
-# Mongkee Programming Language
+# Write A Language
 
-just me going through [Writing An Interpreter In Go](https://interpreterbook.com/)
+Me going through every tutorials out there on how to write a programming language.
 
-![Writing An Interpreter In Go](https://interpreterbook.com/img/cover-cb2da3d1.png)
+- [Writing an Interpreter in Go](/writing-an-interpreter-in-go/README.md)
+- [Build a Custom Scripting Language in Typescript](/build-a-custom-scripting-language-in-typescript/README.md)
